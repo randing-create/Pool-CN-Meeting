@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>北极星导航计划 · 战略对齐会</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sand:  #F0E6D6;
+  --umber: #2A2520;
+  --gold:  #C08A28;
+  --terra: #B46E46;
+  --moss:  #5E6E52;
+}
+
+body {
+  background: #E8DDD0;
+  font-family: 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  color: var(--umber);
+  padding: 40px 24px;
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--sand);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 40px rgba(42,37,32,.12);
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--umber);
+  padding: 36px 48px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.header-left {}
+.h-eyebrow {
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: rgba(240,230,214,.35);
+  margin-bottom: 10px;
+}
+.h-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--sand);
+  line-height: 1.2;
+  letter-spacing: .02em;
+}
+.h-sub {
+  font-size: 13px;
+  color: rgba(240,230,214,.45);
+  margin-top: 8px;
+  line-height: 1.6;
+}
+.header-right {
+  text-align: right;
+  flex-shrink: 0;
+  padding-left: 32px;
+}
+.h-date {
+  font-size: 11px;
+  color: rgba(240,230,214,.35);
+  letter-spacing: .1em;
+  margin-bottom: 6px;
+}
+.h-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--umber);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  padding: 5px 14px;
+  border-radius: 999px;
+}
+.h-time {
+  font-size: 10px;
+  color: rgba(240,230,214,.28);
+  letter-spacing: .08em;
+  margin-top: 8px;
+}
+
+/* ── OUTPUTS BAR ── */
+.outputs {
+  background: rgba(192,138,40,.08);
+  border-bottom: 1px solid rgba(192,138,40,.18);
+  padding: 14px 48px;
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+.outputs-label {
+  font-size: 9px;
+  letter-spacing: .2em;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.output-items {
+  display: flex;
+  gap: 20px;
+}
+.output-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.output-num {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--gold);
+  border: 1px solid rgba(192,138,40,.4);
+  border-radius: 50%;
+  width: 16px; height: 16px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.output-text {
+  font-size: 12px;
+  color: rgba(42,37,32,.6);
+}
+
+/* ── BODY ── */
+.body {
+  padding: 0 48px 48px;
+}
+
+/* ── SECTION ── */
+.section {
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(42,37,32,.08);
+}
+.section:last-child { border-bottom: none; }
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.section-num {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: rgba(240,230,214,.9);
+  background: var(--umber);
+  border-radius: 3px;
+  padding: 4px 8px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.section-num.gold { background: var(--gold); color: var(--umber); }
+.section-num.terra { background: var(--terra); }
+.section-num.moss { background: var(--moss); }
+
+.section-title-block { flex: 1; }
+.section-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--umber);
+  line-height: 1.3;
+}
+.section-time {
+  font-size: 10px;
+  color: rgba(42,37,32,.3);
+  letter-spacing: .08em;
+  margin-top: 3px;
+}
+.section-decision {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: .05em;
+  text-align: right;
+  padding-top: 4px;
+  max-width: 180px;
+  line-height: 1.4;
+}
+
+/* ── TABLE ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  margin: 4px 0 12px;
+}
+th {
+  text-align: left;
+  font-size: 9px;
+  letter-spacing: .14em;
+  color: rgba(42,37,32,.35);
+  font-weight: 600;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(42,37,32,.12);
+  background: rgba(42,37,32,.03);
+}
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(42,37,32,.06);
+  color: rgba(42,37,32,.7);
+  line-height: 1.5;
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+td strong { color: var(--umber); font-weight: 600; }
+.warn-cell {
+  color: var(--terra);
+  font-weight: 600;
+}
+
+/* ── STAT ROW ── */
+.stat-row {
+  display: flex;
+  gap: 12px;
+  margin: 4px 0 16px;
+}
+.stat {
+  flex: 1;
+  background: rgba(42,37,32,.04);
+  border: 1px solid rgba(42,37,32,.08);
+  border-radius: 8px;
+  padding: 14px 16px;
+  text-align: center;
+}
+.stat-num {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--umber);
+  line-height: 1;
+}
+.stat-pct { color: var(--gold); }
+.stat-label {
+  font-size: 11px;
+  color: rgba(42,37,32,.45);
+  margin-top: 5px;
+  line-height: 1.4;
+}
+
+/* ── TAKEAWAY LIST ── */
+.takeaways {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.takeaway {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 14px;
+  background: rgba(42,37,32,.03);
+  border-radius: 6px;
+  border-left: 3px solid var(--gold);
+}
+.takeaway-icon {
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.takeaway-text {
+  font-size: 13px;
+  color: rgba(42,37,32,.65);
+  line-height: 1.6;
+}
+.takeaway-text strong { color: var(--umber); }
+
+/* ── BULLET LIST ── */
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.bullet {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.bullet-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+.bullet-text {
+  font-size: 13.5px;
+  color: rgba(42,37,32,.65);
+  line-height: 1.65;
+}
+.bullet-text strong { color: var(--umber); font-weight: 600; }
+
+/* ── OPTIONS ── */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.option {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid rgba(42,37,32,.1);
+  border-radius: 8px;
+  align-items: flex-start;
+}
+.option-tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  border: 1px solid rgba(42,37,32,.2);
+  border-radius: 4px;
+  padding: 3px 8px;
+  flex-shrink: 0;
+  color: rgba(42,37,32,.5);
+  margin-top: 2px;
+  white-space: nowrap;
+}
+.option-text {
+  font-size: 13px;
+  color: rgba(42,37,32,.65);
+  line-height: 1.6;
+}
+.option-text strong { color: var(--umber); }
+
+/* ── GOAL TABLE ── */
+.goal-table table { margin: 0; }
+.goal-table td:first-child { font-weight: 600; color: var(--umber); white-space: nowrap; }
+.goal-table td:nth-child(2) {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.goal-table td:last-child { color: rgba(42,37,32,.45); font-size: 12px; }
+
+/* ── OFFERING TAG ── */
+.offering-line {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.offer-chip {
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid rgba(42,37,32,.15);
+  border-radius: 999px;
+  padding: 4px 14px;
+  color: rgba(42,37,32,.55);
+}
+.offer-chip.hi {
+  background: var(--umber);
+  color: var(--sand);
+  border-color: transparent;
+}
+
+/* ── TIMELINE ── */
+.timeline {
+  display: flex;
+  gap: 0;
+  margin-top: 8px;
+  border: 1px solid rgba(42,37,32,.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.tl-item {
+  flex: 1;
+  padding: 12px 14px;
+  border-right: 1px solid rgba(42,37,32,.08);
+  text-align: center;
+}
+.tl-item:last-child { border-right: none; }
+.tl-label {
+  font-size: 9px;
+  letter-spacing: .1em;
+  color: rgba(42,37,32,.3);
+  margin-bottom: 4px;
+}
+.tl-block {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--umber);
+  line-height: 1.4;
+}
+.tl-min {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: rgba(42,37,32,.04);
+  border-top: 1px solid rgba(42,37,32,.08);
+  padding: 16px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-brand {
+  font-size: 12px;
+  color: rgba(42,37,32,.35);
+  font-weight: 500;
+}
+.footer-steps {
+  display: flex;
+  gap: 6px;
+}
+.fs {
+  font-size: 9px;
+  border: 1px solid rgba(42,37,32,.12);
+  border-radius: 999px;
+  padding: 3px 10px;
+  color: rgba(42,37,32,.28);
+}
+.footer-note {
+  font-size: 9px;
+  letter-spacing: .1em;
+  color: rgba(42,37,32,.2);
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="h-eyebrow">NORTH STAR NAVIGATION · 内部文件</div>
+      <div class="h-title">北极星导航计划<br>战略对齐会</div>
+      <div class="h-sub">国内市场 · 渠道合作初探</div>
+    </div>
+    <div class="header-right">
+      <div class="h-date">2026年6月23日</div>
+      <div class="h-badge">内部讨论 · 初版</div>
+      <div class="h-time">总时长 60 分钟</div>
+    </div>
+  </div>
+
+  <!-- OUTPUTS -->
+  <div class="outputs">
+    <div class="outputs-label">今日产出</div>
+    <div class="output-items">
+      <div class="output-item"><div class="output-num">①</div><div class="output-text">明确合作模式</div></div>
+      <div class="output-item"><div class="output-num">②</div><div class="output-text">可行的具体抓手</div></div>
+      <div class="output-item"><div class="output-num">③</div><div class="output-text">3个月目标</div></div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- 开场 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num gold">开场</div>
+        <div class="section-title-block">
+          <div class="section-title">现状同步</div>
+          <div class="section-time">8 分钟</div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>姓名</th>
+            <th>身份</th>
+            <th>核心痛点</th>
+            <th>3年愿景</th>
+            <th>希望对话与谁</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>大可</strong></td>
+            <td>学生本人</td>
+            <td>毕业躺平一年，不知能做什么</td>
+            <td>更清晰的人生方向</td>
+            <td>本人</td>
+            <td>待跟进</td>
+          </tr>
+          <tr>
+            <td><strong>沛欣</strong></td>
+            <td>学生本人</td>
+            <td>迷茫，不知道自己是谁/想要什么</td>
+            <td>找到自己内心想要的</td>
+            <td>暂不确定</td>
+            <td>待跟进</td>
+          </tr>
+          <tr>
+            <td><strong>宁静致远</strong></td>
+            <td>妈妈（高中孩子）</td>
+            <td>孩子无动力、无方向、焦虑</td>
+            <td>快乐、有生机、有愿景</td>
+            <td>孩子本人</td>
+            <td>待跟进</td>
+          </tr>
+          <tr>
+            <td><strong>师源章</strong></td>
+            <td>妈妈</td>
+            <td>孩子无方向、自信不足、焦虑</td>
+            <td>方向、情绪、关系</td>
+            <td>孩子本人</td>
+            <td class="warn-cell">⚠ 微信号有误</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="stat-row">
+        <div class="stat"><div class="stat-num stat-pct">100%</div><div class="stat-label">缺乏方向感</div></div>
+        <div class="stat"><div class="stat-num stat-pct">75%</div><div class="stat-label">自信心不足</div></div>
+        <div class="stat"><div class="stat-num stat-pct">75%</div><div class="stat-label">缺乏动力</div></div>
+        <div class="stat"><div class="stat-num">4</div><div class="stat-label">问卷回收份数</div></div>
+      </div>
+
+      <div class="takeaways">
+        <div class="takeaway">
+          <div class="takeaway-text">所有人都在问<strong>"往哪走"</strong>，没有人在问"怎么走更快"——需求是方向，不是效率</div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-text">家长和孩子存在<strong>愿景错位</strong>：家长想要结果（快乐、有生机），学生想要过程的清晰感（知道自己是谁）</div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-text">两位妈妈都说"希望和孩子本人对话"——<strong>决策者是家长，但买单的前提是孩子愿意参与</strong></div>
+        </div>
+        <div class="takeaway">
+          <div class="takeaway-text">报名转化率（4人 / talk总触达人数）是<strong>下一步需要补的数据</strong></div>
+        </div>
+      </div>
+
+      <div class="offering-line">
+        <div style="font-size:11px;color:rgba(42,37,32,.35);letter-spacing:.1em;padding-top:5px;">OFFERING</div>
+        <div class="offer-chip">深度探索 ¥1,000</div>
+        <div class="offer-chip">起航包 ¥2,800 / 3次</div>
+        <div class="offer-chip hi">领航包 ¥4,500 / 6次 ★</div>
+      </div>
+    </div>
+
+    <!-- 第一块 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div class="section-title-block">
+          <div class="section-title">产品是否 Ready</div>
+          <div class="section-time">7 分钟</div>
+        </div>
+        <div class="section-decision">决定：产品就绪的门槛</div>
+      </div>
+      <div class="bullets">
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text">三个可联系客户还没跑完。渠道放量之前，产品需要先被验证</div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text"><strong>用什么标准判断"可以开始推了"？</strong> 几个客户？什么反馈？</div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text">询问她的市场感知：在她的圈子里，这类服务的接受度如何？</div></div>
+      </div>
+    </div>
+
+    <!-- 第二块 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num terra">02</div>
+        <div class="section-title-block">
+          <div class="section-title">动机对齐</div>
+          <div class="section-time">10 分钟</div>
+        </div>
+        <div class="section-decision">决定：合作的真实基础<br>谁在这件事上 "in"</div>
+      </div>
+      <div class="bullets">
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text"><strong>然的动机：</strong>让苦苦寻找帮助的人得到我的服务。这是 mission，不是 favor。合作要建立在理性互利的基础上，不希望她是"出于帮你"</div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text"><strong>问她：</strong>她的动机是什么？个人意愿，还是藤溪花园作为整体的方向？</div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text"><strong>她/花园在这里的角色是什么？</strong> 个人推荐 vs 平台背书——两种完全不同的合作逻辑，直接影响后续工作方式</div></div>
+      </div>
+    </div>
+
+    <!-- 第三块 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num moss">03</div>
+        <div class="section-title-block">
+          <div class="section-title">定位呈现 + 圈层匹配</div>
+          <div class="section-time">10 分钟</div>
+        </div>
+        <div class="section-decision">决定：她来指<br>第一批打哪里</div>
+      </div>
+      <div class="bullets">
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text">我们负责把服务说清楚——国内、国外、本质是什么（参考个人主页）。<strong>圈层匹配交给她来做，不预设</strong></div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text">呈现后引导她回答：她的网络里谁和这个需求最近？</div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text">这些人的<strong>心理准备度</strong>如何？已经在寻找，还是需要先被教育"这是什么"</div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text"><strong>地理范围：</strong>山西本地 or 跨省？线上是否可达，feasibility 如何？</div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text">哪条线最快出第一个结果？</div></div>
+      </div>
+    </div>
+
+    <!-- 第四块 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <div class="section-title-block">
+          <div class="section-title">风险边界 + 退出机制</div>
+          <div class="section-time">8 分钟</div>
+        </div>
+        <div class="section-decision">决定：边界在哪<br>退出条款是什么</div>
+      </div>
+      <div class="bullets">
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text">她用自己的信用背书，损失的不是你的客户，是<strong>她二十年的关系网</strong></div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text">她愿意背书到什么程度？什么情况下不推？</div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text">出了问题怎么处理，谁承担？</div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text"><strong>退出：</strong>如果合作启动后发现不对，退出的条件和方式是什么？把这个说清楚，合作才稳</div></div>
+      </div>
+    </div>
+
+    <!-- 第五块 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">05</div>
+        <div class="section-title-block">
+          <div class="section-title">定价阻力 + 渠道定价策略</div>
+          <div class="section-time">7 分钟</div>
+        </div>
+        <div class="section-decision">决定：定价是否调整<br>如何调整</div>
+      </div>
+      <div class="bullets">
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text"><strong>家长帮孩子买</strong> vs <strong>孩子自己买</strong>——决策逻辑不同，付费意愿也不同</div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text">¥4,500 在她的圈层是什么感知？</div></div>
+        <div class="bullet"><div class="bullet-dot"></div><div class="bullet-text">是否需要针对渠道设计专属价格或套餐结构？</div></div>
+      </div>
+    </div>
+
+    <!-- 第六块 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num gold">06</div>
+        <div class="section-title-block">
+          <div class="section-title">合作模式</div>
+          <div class="section-time">10 分钟</div>
+        </div>
+        <div class="section-decision">决定：选一个先跑<br>+ 第一个可执行动作</div>
+      </div>
+      <div class="options">
+        <div class="option">
+          <div class="option-tag">选项 A</div>
+          <div class="option-text"><strong>推荐人</strong> — 轻介入，先跑模型。适合验证期</div>
+        </div>
+        <div class="option">
+          <div class="option-tag">选项 B</div>
+          <div class="option-text"><strong>沙龙召集人</strong> — 15-20人，然讲体验+成交，目标 3-5 个报名。适合快速放量</div>
+        </div>
+        <div class="option">
+          <div class="option-tag">选项 C</div>
+          <div class="option-text"><strong>渠道合伙人</strong> — 机构/平台导流，成交返佣。适合 Q4 规模化</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;padding:12px 16px;background:rgba(180,110,70,.07);border-left:3px solid var(--terra);border-radius:0 6px 6px 0;font-size:13px;color:rgba(42,37,32,.6);line-height:1.6;">
+        如果今天发现动机不对、风险太高、时机不成熟——<strong style="color:var(--terra)">"现在还不是时候"的条件是什么？什么时候重新回到这张桌子？</strong>
+      </div>
+    </div>
+
+    <!-- 第七块 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num moss">07</div>
+        <div class="section-title-block">
+          <div class="section-title">3个月目标</div>
+          <div class="section-time">10 分钟</div>
+        </div>
+        <div class="section-decision">决定：数字填进去<br>今天散会前确认</div>
+      </div>
+      <div class="goal-table">
+        <table>
+          <thead>
+            <tr><th>维度</th><th>目标</th><th>成功标准</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>付费客户数</td>
+              <td>___ 位</td>
+              <td>合同签署 + 首款到账</td>
+            </tr>
+            <tr>
+              <td>收入</td>
+              <td>¥ _____</td>
+              <td>实际收款金额</td>
+            </tr>
+            <tr>
+              <td>口碑素材</td>
+              <td>___ 条</td>
+              <td>客户主动发出的中文截图，非引导</td>
+            </tr>
+            <tr>
+              <td>渠道验证</td>
+              <td>第一场沙龙<br>or 第一个转介绍</td>
+              <td>有人通过妈妈网络成交</td>
+            </tr>
+            <tr>
+              <td>产品迭代</td>
+              <td>1 次 offering 更新</td>
+              <td>基于客户反馈，有具体修改落地</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:14px;font-size:12px;color:rgba(42,37,32,.4);line-height:1.7;">
+        没有案例，渠道打不开。前三个月的核心任务是把案例做出来。
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div style="padding-top: 8px;">
+      <div style="font-size:9px;letter-spacing:.18em;color:rgba(42,37,32,.3);margin-bottom:10px;">会议时间分配</div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-label">开场</div><div class="tl-min">8'</div><div class="tl-block">现状同步</div></div>
+        <div class="tl-item"><div class="tl-label">01</div><div class="tl-min">7'</div><div class="tl-block">产品 Ready</div></div>
+        <div class="tl-item"><div class="tl-label">02</div><div class="tl-min">10'</div><div class="tl-block">动机对齐</div></div>
+        <div class="tl-item"><div class="tl-label">03</div><div class="tl-min">10'</div><div class="tl-block">定位 + 圈层</div></div>
+        <div class="tl-item"><div class="tl-label">04</div><div class="tl-min">8'</div><div class="tl-block">风险 + 退出</div></div>
+        <div class="tl-item"><div class="tl-label">05</div><div class="tl-min">7'</div><div class="tl-block">定价策略</div></div>
+        <div class="tl-item"><div class="tl-label">06</div><div class="tl-min">10'</div><div class="tl-block">合作模式</div></div>
+        <div class="tl-item"><div class="tl-label">07</div><div class="tl-min">10'</div><div class="tl-block">3个月目标</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-brand">陪你寻路的然 · ACE 自我领导力</div>
+    <div class="footer-steps">
+      <div class="fs">01 配得感</div>
+      <div class="fs">02 主体性</div>
+      <div class="fs">03 能动性</div>
+      <div class="fs">04 开放性</div>
+      <div class="fs">05 创造力</div>
+    </div>
+    <div class="footer-note">内部文件 · 勿外传</div>
+  </div>
+
+</div>
+</body>
+</html>
